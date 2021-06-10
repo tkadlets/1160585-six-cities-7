@@ -1,16 +1,16 @@
-// react, redux, types
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 function Card (props) {
-  const { data } = props;
-  const { mark, imageSrc, priceValue, priceText, name, type } = data;
+  const {data} = props;
+  const {mark, imageSrc, priceValue, priceText, name, type} = data;
 
   return (
     <article className="cities__place-card place-card">
       {mark &&
         <div className="place-card__mark">
-          <span>{ mark }</span>
+          <span>{mark}</span>
         </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -53,7 +53,7 @@ Card.propTypes = {
     priceText: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
 export default Card;

@@ -1,54 +1,10 @@
 import React from 'react';
-import Card from './card';
+import Card from '../card/card';
+import PropTypes from 'prop-types';
 
-function Home() {
-  const cards = [
-    {
-      id: 1,
-      mark: 'Premium',
-      imageSrc: 'img/apartment-01.jpg',
-      priceValue: 120,
-      priceText: 'night',
-      name: 'Beautiful luxurious apartment at great location',
-      type: 'Apartment',
-    },
-    {
-      id: 2,
-      mark: '',
-      imageSrc: 'img/room.jpg',
-      priceValue: 80,
-      priceText: 'night',
-      name: 'Wood and stone place',
-      type: 'Private room',
-    },
-    {
-      id: 3,
-      mark: '',
-      imageSrc: 'img/apartment-02.jpg',
-      priceValue: 132,
-      priceText: 'night',
-      name: 'Canal View Prinsengracht',
-      type: 'Apartment',
-    },
-    {
-      id: 4,
-      mark: 'Premium',
-      imageSrc: 'img/apartment-03.jpg',
-      priceValue: 180,
-      priceText: 'night',
-      name: 'Nice, cozy, warm big bed apartment',
-      type: 'Apartment',
-    },
-    {
-      id: 5,
-      mark: '',
-      imageSrc: 'img/room.jpg',
-      priceValue: 80,
-      priceText: 'night',
-      name: 'Wood and stone place',
-      type: 'Private room',
-    },
-  ];
+
+function Home (props) {
+  const {cards, cities, sorts} = props;
 
   return (
     <>
@@ -90,36 +46,13 @@ function Home() {
           <div className="tabs">
             <section className="locations container">
               <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
+                {cities.map((item) => (
+                  <li key={item.id} className="locations__item">
+                    <a className="locations__item-link tabs__item" href="#">
+                      <span>{item.name}</span>
+                    </a>
+                  </li>
+                ))}
               </ul>
             </section>
           </div>
@@ -137,10 +70,9 @@ function Home() {
                     </svg>
                   </span>
                   <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                    <li className="places__option" tabIndex="0">Price: low to high</li>
-                    <li className="places__option" tabIndex="0">Price: high to low</li>
-                    <li className="places__option" tabIndex="0">Top rated first</li>
+                    {sorts.map((item) => (
+                      <li key = {item.id} className="places__option places__option--active" tabIndex="0">{item.name}</li>
+                    ))}
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
@@ -161,5 +93,11 @@ function Home() {
     </>
   );
 }
+
+Home.propTypes = {
+  cards: PropTypes.array.isRequired,
+  cities: PropTypes.array.isRequired,
+  sorts: PropTypes.array.isRequired,
+};
 
 export default Home;
