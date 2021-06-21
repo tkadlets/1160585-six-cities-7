@@ -1,10 +1,14 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import Card from '../card/card';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 
-function Home (props) {
+function Main (props) {
   const {cards, cities, sorts} = props;
+  const [activeItem, setActive] = useState('Popular');
+  const [sortMenuIsOpened, setSortMenuIsOpened] = useState(false);
 
   return (
     <>
@@ -63,15 +67,21 @@ function Home (props) {
                 <b className="places__found">{cards.length} places to stay in Amsterdam</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0">
-                  Popular
+                  <span className="places__sorting-type" tabIndex="0" onClick={() => setSortMenuIsOpened(!sortMenuIsOpened)}>
+                    {activeItem}
                     <svg className="places__sorting-arrow" width="7" height="4">
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
                   </span>
-                  <ul className="places__options places__options--custom places__options--opened">
+                  <ul className={classNames('places__options', 'places__options--custom', {'places__options--opened': sortMenuIsOpened})}>
                     {sorts.map((item) => (
-                      <li key = {item.id} className="places__option places__option--active" tabIndex="0">{item.name}</li>
+                      <li
+                        key = {item.id}
+                        className={classNames('places__option', {'places__option--active': item.name === activeItem})}
+                        tabIndex="0"
+                        onClick={() => {setActive(item.name); setSortMenuIsOpened(false);}}
+                      >{item.name}
+                      </li>
                     ))}
                   </ul>
                 </form>
@@ -94,10 +104,10 @@ function Home (props) {
   );
 }
 
-Home.propTypes = {
+Main.propTypes = {
   cards: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
   sorts: PropTypes.array.isRequired,
 };
 
-export default Home;
+export default Main;
