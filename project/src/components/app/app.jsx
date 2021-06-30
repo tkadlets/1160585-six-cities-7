@@ -7,24 +7,25 @@ import SignIn from '../sign-in/sign-in';
 import Favorites from '../favorites/favorites';
 import Offer from '../offer/offer';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { offersType } from '../../prop-types-const.js';
 
 function App(props) {
-  const {cards, cities, sorts} = props;
+  const {cities, sorts, offers, reviews} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.MAIN} exact>
-          <Main cards={cards} cities={cities} sorts={sorts} />;
+          <Main cities={cities} sorts={sorts} offers={offers} reviews={reviews} />;
         </Route>
         <Route path={AppRoute.SIGNIN} exact>
           <SignIn />
         </Route>
         <Route path={AppRoute.FAVORITES} exact>
-          <Favorites />
+          <Favorites offers={offers} reviews={reviews} />
         </Route>
         <Route path={AppRoute.ROOM} exact>
-          <Offer />
+          <Offer offers={offers} reviews={reviews} />
         </Route>
         <Route>
           <NotFoundPage />
@@ -35,9 +36,10 @@ function App(props) {
 }
 
 App.propTypes = {
-  cards: PropTypes.array.isRequired,
   cities: PropTypes.array.isRequired,
   sorts: PropTypes.array.isRequired,
+  offers: offersType,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default App;
