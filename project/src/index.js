@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import offers from './components/mocks/offers';
+import reviews from './components/mocks/reviews';
 const cards = [
   {
     id: 1,
@@ -66,6 +68,6 @@ const sorts = [
 
 ReactDOM.render(
   <React.StrictMode>
-    <App cards={cards} cities={cities} sorts={sorts}/>
+    <App cards={cards} cities={cities} sorts={sorts} offers={offers} reviews={reviews}/>
   </React.StrictMode>,
   document.getElementById('root'));

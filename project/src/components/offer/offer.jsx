@@ -1,7 +1,9 @@
 import React from 'react';
 import Logo from '../logo/logo';
+import CommentSendForm from '../comment-send-form/comment-send-form';
 
 function Offer () {
+
   return (
     <div>
       <div style={{display: 'none'}}>
@@ -20,7 +22,12 @@ function Offer () {
                     <a className="header__nav-link header__nav-link--profile" href="#">
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__login">Sign in</span>
+                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    </a>
+                  </li>
+                  <li className="header__nav-item">
+                    <a className="header__nav-link" href="#">
+                      <span className="header__signout">Sign out</span>
                     </a>
                   </li>
                 </ul>
@@ -173,6 +180,7 @@ function Offer () {
                       </div>
                     </li>
                   </ul>
+                  <CommentSendForm />
                 </section>
               </div>
             </div>
