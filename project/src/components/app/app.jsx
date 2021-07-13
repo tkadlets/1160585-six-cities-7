@@ -15,21 +15,11 @@ function App(props) {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={AppRoute.MAIN} exact>
-          <Main cities={cities} sorts={sorts} offers={offers} reviews={reviews} />;
-        </Route>
-        <Route path={AppRoute.SIGNIN} exact>
-          <SignIn />
-        </Route>
-        <Route path={AppRoute.FAVORITES} exact>
-          <Favorites offers={offers} reviews={reviews} />
-        </Route>
-        <Route path={AppRoute.ROOM} exact>
-          <Offer offers={offers} reviews={reviews} />
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
+        <Route path={AppRoute.MAIN} exact render={() => (<Main cities={cities} sorts={sorts} offers={offers} reviews={reviews} />)}/>
+        <Route path={AppRoute.SIGNIN} exact render={() => (<SignIn />)} />
+        <Route path={AppRoute.FAVORITES} exact render={() => (<Favorites offers={offers} reviews={reviews} />)} />
+        <Route path={AppRoute.ROOM} exact render={() => (<Offer offers={offers} reviews={reviews} />)} />
+        <Route render={() => (<NotFoundPage />)} />
       </Switch>
     </BrowserRouter>);
 
