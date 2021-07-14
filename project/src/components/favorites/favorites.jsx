@@ -6,14 +6,14 @@ import { offersType } from '../../prop-types-const';
 function Favorites (props) {
   const { offers } = props;
   const favoriteOffers = offers.filter((item) => item['is_favorite'] === true);
-  const favoriteCities = [];
-  favoriteOffers.forEach((item) => {
-    const cityName = item.city.name;
-    const notInArray = !favoriteCities.some((el) => el === cityName);
+  const favoriteCities = favoriteOffers.reduce((accumulator, currentValue) => {
+    const cityName = currentValue.city.name;
+    const notInArray = !accumulator.some((el) => el === cityName);
     if (notInArray) {
-      favoriteCities.push(cityName);
+      accumulator.push(cityName);
     }
-  });
+    return accumulator;
+  }, []);
 
   return (
     <div>
