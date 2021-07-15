@@ -5,7 +5,7 @@ const reviews = [
     'id': 1,
     'rating': 5,
     'user': {
-      'avatar_url': 'img/avatar-angelina.png',
+      'avatar_url': 'img/avatar-angelina.jpg',
       'id': 3,
       'is_pro': false,
       'name': 'Mariana',
@@ -17,7 +17,7 @@ const reviews = [
     'id': 2,
     'rating': 4,
     'user': {
-      'avatar_url': 'img/avatar-angelina.png',
+      'avatar_url': 'img/avatar-angelina.jpg',
       'id': 4,
       'is_pro': true,
       'name': 'Angelina',
