@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {ActionCreator} from '../../store/action';
+import {connect} from 'react-redux';
 import OffersList from '../offers-list/offers-list';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { offersType } from '../../prop-types-const.js';
 import Logo from '../logo/logo';
 import Map from '../map/map';
-
+import Cities from '../cities/cities';
 
 function Main (props) {
-  const {cities, sorts, offers} = props;
+  const {cities, sorts, getCityOffers, currentCity, currentOffersList} = props;
   const [activeItem, setActive] = useState('Popular');
   const [sortMenuIsOpened, setSortMenuIsOpened] = useState(false);
+  useEffect(() => getCityOffers(currentCity), [currentCity, getCityOffers]);
 
   return (
     <>
@@ -46,25 +49,12 @@ function Main (props) {
         </header>
 
         <main className="page__main page__main--index">
-          <h1 className="visually-hidden">Cities</h1>
-          <div className="tabs">
-            <section className="locations container">
-              <ul className="locations__list tabs__list">
-                {cities.map((item) => (
-                  <li key={item.id} className="locations__item">
-                    <a className="locations__item-link tabs__item" href="#">
-                      <span>{item.name}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
+          <Cities cities={cities} />
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+                <b className="places__found">{currentOffersList.length} places to stay in {currentCity}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex="0" onClick={() => setSortMenuIsOpened(!sortMenuIsOpened)}>
@@ -86,12 +76,12 @@ function Main (props) {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  <OffersList offers={offers} />
+                  <OffersList offers={currentOffersList} />
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map offers={offers} />
+                  <Map offers={currentOffersList} />
                 </section>
               </div>
             </div>
@@ -105,7 +95,20 @@ function Main (props) {
 Main.propTypes = {
   cities: PropTypes.array.isRequired,
   sorts: PropTypes.array.isRequired,
-  offers: offersType,
+  getCityOffers: PropTypes.func.isRequired,
+  currentOffersList: offersType,
+  currentCity: PropTypes.string,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  currentOffersList: state.currentOffersList,
+  currentCity: state.currentCity,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCityOffers(city) {
+    dispatch(ActionCreator.getOffersByCity(city));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

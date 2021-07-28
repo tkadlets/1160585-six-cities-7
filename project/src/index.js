@@ -4,6 +4,16 @@ import App from './components/app/app';
 import offers from './components/mocks/offers';
 import reviews from './components/mocks/reviews';
 import 'leaflet/dist/leaflet.css';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {reducer} from './store/reducer';
+
+
+const store = createStore(
+  reducer,
+  composeWithDevTools(),
+);
 
 const cities = [
   {id: 1, name: 'Paris'},
@@ -23,6 +33,8 @@ const sorts = [
 
 ReactDOM.render(
   <React.StrictMode>
-    <App cities={cities} sorts={sorts} offers={offers} reviews={reviews}/>
+    <Provider store={store}>
+      <App cities={cities} sorts={sorts} offers={offers} reviews={reviews}/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
