@@ -14,6 +14,23 @@ function Map (props) {
   });
   const zoom = 12;
   const [map, setMap] = useState(null);
+  const setMarkers = () => {
+    if (map !== null) {
+      offers.forEach((offer) => {
+        leaflet
+          .marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          }, {
+            icon,
+          })
+          .addTo(map);
+      });
+    }
+  };
+  useEffect(() => {
+    setMarkers();
+  },[map, offers]);
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
@@ -35,19 +52,9 @@ function Map (props) {
           },
         )
         .addTo(instance);
-      offers.forEach((offer) => {
-        leaflet
-          .marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
-          }, {
-            icon,
-          })
-          .addTo(instance);
-      });
       setMap(instance);
     }
-  }, [mapRef, map, city, offers]);
+  }, [mapRef, map, city, offers, icon]);
 
   return (
     <div id="map" style={{height: '100%'}} ref={mapRef}></div>
@@ -59,3 +66,4 @@ Map.propTypes = {
 };
 
 export default Map;
+

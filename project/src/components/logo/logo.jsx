@@ -18,4 +18,3 @@ Logo.propTypes = {
 };
 
 export default Logo;
-
