@@ -3,14 +3,17 @@
 import React, { useState } from 'react';
 import { offerType } from '../../prop-types-const.js';
 import { Link } from 'react-router-dom';
+import {ActionCreator} from '../../store/action';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 function Card (props) {
-  const {offer} = props;
+  const {offer, setHoveredOffer} = props;
   const {'is_premium': isPremium, 'preview_image': previewImage, price, name, type, rating, id} = offer;
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <article onMouseEnter= {() => setIsHovered(true)} onMouseLeave= {() => setIsHovered(false)} className="cities__place-card place-card">
+    <article onMouseEnter= {() => setHoveredOffer(id)} onMouseLeave= {() => setHoveredOffer(null)} className="cities__place-card place-card">
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -53,6 +56,14 @@ function Card (props) {
 
 Card.propTypes = {
   offer: offerType,
+  setHoveredOffer: PropTypes.func.isRequired,
 };
 
-export default Card;
+const mapDispatchToProps = (dispatch) => ({
+  setHoveredOffer(offerId) {
+    dispatch(ActionCreator.setHoveredOffer(offerId));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(Card);
+

@@ -10,12 +10,12 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import { offersType } from '../../prop-types-const.js';
 
 function App(props) {
-  const {cities, sorts, offers, reviews} = props;
+  const {cities, offers, reviews} = props;
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route path={AppRoute.MAIN} exact render={() => (<Main cities={cities} sorts={sorts} offers={offers} reviews={reviews} />)}/>
+        <Route path={AppRoute.MAIN} exact render={() => (<Main cities={cities} offers={offers} reviews={reviews} />)}/>
         <Route path={AppRoute.SIGNIN} exact render={() => (<SignIn />)} />
         <Route path={AppRoute.FAVORITES} exact render={() => (<Favorites offers={offers} reviews={reviews} />)} />
         <Route path={AppRoute.ROOM} exact render={() => (<Offer offers={offers} reviews={reviews} />)} />
@@ -27,7 +27,6 @@ function App(props) {
 
 App.propTypes = {
   cities: PropTypes.array.isRequired,
-  sorts: PropTypes.array.isRequired,
   offers: offersType,
   reviews: PropTypes.array.isRequired,
 };

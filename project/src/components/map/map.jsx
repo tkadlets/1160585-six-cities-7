@@ -1,14 +1,20 @@
 import React, {useRef, useState, useEffect} from 'react';
 import leaflet from 'leaflet';
 import { offersType } from '../../prop-types-const';
-
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 function Map (props) {
-  const {offers} = props;
+  const {offers, hoveredOffer} = props;
   const city = [52.38333, 4.9];
   const mapRef = useRef(null);
   const icon = leaflet.icon({
     iconUrl: 'img/pin.svg',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  });
+  const hoveredIcon = leaflet.icon({
+    iconUrl: 'img/pin-active.svg',
     iconSize: [30, 30],
     iconAnchor: [15, 30],
   });
@@ -22,7 +28,7 @@ function Map (props) {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon,
+            icon: offer.id === hoveredOffer ? hoveredIcon : icon,
           })
           .addTo(map);
       });
@@ -63,7 +69,12 @@ function Map (props) {
 
 Map.propTypes = {
   offers: offersType,
+  hoveredOffer: PropTypes.oneOfType([null, PropTypes.number]).isRequired,
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  hoveredOffer: state.hoveredOffer,
+});
+
+export default connect(mapStateToProps, null)(Map);
 

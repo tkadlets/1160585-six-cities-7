@@ -24,17 +24,10 @@ const cities = [
   {id: 6, name: 'Dusseldorf'},
 ];
 
-const sorts = [
-  {id: 1, name: 'Popular'},
-  {id: 2, name: 'Price: low to high'},
-  {id: 3, name: 'Price: high to low'},
-  {id: 4, name: 'Top rated first'},
-];
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App cities={cities} sorts={sorts} offers={offers} reviews={reviews}/>
+      <App cities={cities} offers={offers} reviews={reviews}/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

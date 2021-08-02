@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
+import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import OffersList from '../offers-list/offers-list';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { offersType } from '../../prop-types-const.js';
 import Logo from '../logo/logo';
 import Map from '../map/map';
 import Cities from '../cities/cities';
+import {getCurrentCityOffers} from '../../store/selectors';
+import SortOptions from '../sort-options/sort-options';
 
 function Main (props) {
-  const {cities, sorts, getCityOffers, currentCity, currentOffersList} = props;
-  const [activeItem, setActive] = useState('Popular');
-  const [sortMenuIsOpened, setSortMenuIsOpened] = useState(false);
-  useEffect(() => getCityOffers(currentCity), [currentCity, getCityOffers]);
+  const {cities, currentCity} = props;
+  const currentOffersList = useSelector(getCurrentCityOffers);
 
   return (
     <>
@@ -55,26 +52,7 @@ function Main (props) {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{currentOffersList.length} places to stay in {currentCity}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex="0" onClick={() => setSortMenuIsOpened(!sortMenuIsOpened)}>
-                    {activeItem}
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className={classNames('places__options', 'places__options--custom', {'places__options--opened': sortMenuIsOpened})}>
-                    {sorts.map((item) => (
-                      <li
-                        key = {item.id}
-                        className={classNames('places__option', {'places__option--active': item.name === activeItem})}
-                        tabIndex="0"
-                        onClick={() => {setActive(item.name); setSortMenuIsOpened(false);}}
-                      >{item.name}
-                      </li>
-                    ))}
-                  </ul>
-                </form>
+                <SortOptions />
                 <div className="cities__places-list places__list tabs__content">
                   <OffersList offers={currentOffersList} />
                 </div>
@@ -94,21 +72,11 @@ function Main (props) {
 
 Main.propTypes = {
   cities: PropTypes.array.isRequired,
-  sorts: PropTypes.array.isRequired,
-  getCityOffers: PropTypes.func.isRequired,
-  currentOffersList: offersType,
   currentCity: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  currentOffersList: state.currentOffersList,
   currentCity: state.currentCity,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCityOffers(city) {
-    dispatch(ActionCreator.getOffersByCity(city));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, null)(Main);

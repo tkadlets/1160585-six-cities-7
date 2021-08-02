@@ -1,8 +1,7 @@
-import offers from '../components/mocks/offers.js';
-
 export const ActionType = {
-  SET_CURRENT_CITY: 'SET_CURRENT_CITY',
-  SET_CURRENT_OFFERS_LIST: 'SET_CURRENT_OFFERS_LIST',
+  SET_CURRENT_CITY: 'data/setCurrentCity',
+  SET_CURRENT_SORT: 'data/setCurrentSort',
+  SET_HOVERED_OFFER: 'data/setHoveredOffer',
 };
 
 export const ActionCreator = {
@@ -14,11 +13,12 @@ export const ActionCreator = {
     type: ActionType.SET_CURRENT_OFFERS_LIST,
     payload: offersList,
   }),
-  getOffersByCity: (city) => {
-    const offersByCity = offers.filter((item) => item.city.name === city);
-    return {
-      type: ActionType.SET_CURRENT_OFFERS_LIST,
-      payload: offersByCity,
-    };
-  },
+  setCurrentSort: (sortId) => ({
+    type: ActionType.SET_CURRENT_SORT,
+    payload: sortId,
+  }),
+  setHoveredOffer: (offerId) => ({
+    type: ActionType.SET_HOVERED_OFFER,
+    payload: offerId,
+  }),
 };

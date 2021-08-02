@@ -35,7 +35,6 @@ Cities.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   setCity(city) {
     dispatch(ActionCreator.setCurrentCity(city));
-    dispatch(ActionCreator.getOffersByCity(city));
   },
 });
 
